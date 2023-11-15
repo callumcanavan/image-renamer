@@ -1,6 +1,6 @@
-# Image Labeler
+# Image Renamer
 
-Script that goes through every image file in a given directory and renames them using GPT-4 Vision.
+Goes through every image file in a given directory and renames them using GPT-4 Vision.
 
 ## Useage
 
