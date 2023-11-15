@@ -2,6 +2,8 @@
 
 Goes through every image file in a given directory and renames them using GPT-4 Vision.
 
+WARNING: May incur large costs and/or rate limits if there are a lot of images - labels each image with its own prompt and goes through all the subdirectories in a given directory recursively.
+
 ## Useage
 
 - Copy `.env.template` in the root directory to a `.env` file and paste your OpenAI API key.
