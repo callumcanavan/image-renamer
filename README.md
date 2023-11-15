@@ -2,7 +2,7 @@
 
 Goes through every image file in a given directory and renames them using GPT-4 Vision.
 
-> :warning: May incur large costs and/or rate limits if there are a lot of images. `label_images.py` labels each image with its own prompt (including images that may already have a descriptive filename!) and goes through all the subdirectories in a given directory recursively.
+> :warning: May incur large costs and/or rate limits if there are a lot of images. `label_images.py` goes through all subdirectories in a given directory recursively and labels every image with their own GPT-4 completion (including images that may already have a descriptive filename!).
 
 ## Useage
 
