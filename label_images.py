@@ -16,13 +16,15 @@ PROMPT = (
 )
 
 
-def encode_image(image_path):
+def encode_image(image_path: str):
+    """Read and prepare an image for use with GPT-4 Vision API."""
     with open(image_path, "rb") as image_file:
         return base64.b64encode(image_file.read()).decode("utf-8")
 
 
 def get_image_name(image_path: str) -> str:
-    api_key = os.environ.get("OPENAI_API_KEY")
+    """Get a sensible filename for an image using GPT-4 Vision."""
+    api_key = os.environ.get("OPENAI_API_KEY") # Must have API key set
     base64_image = encode_image(image_path)
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
@@ -47,11 +49,13 @@ def get_image_name(image_path: str) -> str:
         "https://api.openai.com/v1/chat/completions", headers=headers, json=payload
     )
     content = response.json()["choices"][0]["message"]["content"]
+    # Assumes name is between backticks in response
     name = re.search(r"```(.*?)```", content, re.DOTALL).group(1).strip()
     return name
 
 
 def get_image_paths(directory: str) -> list[str]:
+    """Get all image files (jpg, jpeg, png, gif, bmp) in a directory."""
     image_paths = []
     for filename in os.listdir(directory):
         if filename.lower().endswith(IMAGE_EXTENSIONS):
@@ -60,6 +64,7 @@ def get_image_paths(directory: str) -> list[str]:
 
 
 def name_images(image_paths):
+    """Use GPT-4 Vision to get names for images and rename them."""
     progress_bar = tqdm(image_paths, total=len(image_paths))
     for path in progress_bar:
         new_name = get_image_name(path)
