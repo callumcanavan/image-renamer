@@ -24,7 +24,7 @@ def encode_image(image_path: str):
 
 def get_image_name(image_path: str) -> str:
     """Get a sensible filename for an image using GPT-4 Vision."""
-    api_key = os.environ.get("OPENAI_API_KEY") # Must have API key set
+    api_key = os.environ.get("OPENAI_API_KEY")  # Must have API key set
     base64_image = encode_image(image_path)
     headers = {"Content-Type": "application/json", "Authorization": f"Bearer {api_key}"}
 
@@ -75,12 +75,15 @@ def name_images(image_paths):
 
 @click.command()
 @click.argument("directory")
-def main(directory):
+def main(directory: str) -> None:
     if not os.path.isdir(directory):
         print(f"The directory {directory} does not exist.")
         return
 
     image_paths = get_image_paths(directory)
+    if not image_paths:
+        print(f"No images found in {directory}.")
+        return
     name_images(image_paths)
 
 
